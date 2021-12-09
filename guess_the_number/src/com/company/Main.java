@@ -3,7 +3,7 @@ package com.company;
 import java.util.Scanner;
 
 public class Main {
-    public static void guessingGame() {
+    static void guessingGame() {
         Scanner input = new Scanner(System.in);
         try {
             System.out.println("What is your name?");
@@ -35,8 +35,6 @@ public class Main {
             } while (playing == true);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        } finally {
-            System.out.println("try catch finished.");
         }
 
     }
@@ -55,8 +53,6 @@ public class Main {
             }
         } catch(Exception e) {
             System.out.println(e.getMessage());
-        } finally {
-            System.out.println("try catch finished.");
         }
 
     }
