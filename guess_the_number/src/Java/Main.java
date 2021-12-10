@@ -1,15 +1,20 @@
-package com.company;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
+    static Scanner input = new Scanner(System.in);
+    public static String askName() {
+            String question = "What is your name?";
+            System.out.println(question);
+            return question;
+    }
     static void guessingGame() {
-        Scanner input = new Scanner(System.in);
         try {
-            System.out.println("What is your name?");
             String name = input.next();
+            System.out.println("Alright " + name + "...");
             int num = (int) Math.floor(Math.random()*(20-1+1)+1);
-            System.out.println("Well " + name + ", I am thinking of a number between 1 and 20. Take a guess. If you don't guess the number in 6 tries, you lose.");
+            System.out.println("I am thinking of a number between 1 and 20. Take a guess. If you don't guess the number in 6 tries, you lose.");
             Boolean playing = true;
             int count = 0;
             do {
@@ -39,21 +44,49 @@ public class Main {
 
     }
 
-    public static void main(String[] args) {
-	// write your code here
-    guessingGame();
+    public static String replay() {
+        String output = "Would you like to play again? (y or n)";
+        System.out.println(output);
+        return output;
+    }
+
+    public static String restart(String userInput) {
+        String response = null;
         try{
-            System.out.println("Would you like to play again? (y or n)");
-            Scanner input = new Scanner(System.in);
-            String playAgain = input.next();
-            if (playAgain.equals("y")) {
+            if (userInput.equals("y")) {
+                askName();
                 guessingGame();
+                response = "restarting";
+                return response;
             } else {
                 System.out.println("See you next time!");
+                response = "See you next time";
             }
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
+        return response;
+    }
+
+
+
+    public static void main(String[] args) {
+	// write your code here
+
+    askName();
+
+    guessingGame();
+
+    int restartTimes = 0;
+    do {
+        restartTimes ++;
+        replay();
+        Scanner input = new Scanner(System.in);
+        String playAgain = input.next();
+        restart(playAgain);
+    } while (restartTimes < 100);
+
+
 
     }
 }
