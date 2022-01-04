@@ -1,5 +1,4 @@
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
@@ -37,7 +36,7 @@ public class Main {
                     System.out.println("You must input a number between 1 and 20. Guess again.");
                 }
 
-            } while (playing == true);
+            } while (playing);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
