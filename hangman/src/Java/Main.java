@@ -1,11 +1,8 @@
-package src;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -20,41 +17,50 @@ public class Main {
         }
         Random rand = new Random();
 
-        String word = words.get(rand.nextInt(words.size()));
+        String secretWord = words.get(rand.nextInt(words.size()));
+
+        System.out.println(secretWord);
 
         List<Character> playerGuesses = new ArrayList<>();
 
-        runGame(word, playerGuesses, input);
+        runGame(secretWord, playerGuesses, input);
 
         System.out.println("Would you like to play again? (y or n)");
 
         if(input.nextLine().equals("y")) {
-            runGame(word, playerGuesses, input);
+            runGame(secretWord, playerGuesses, input);
         } else {
             System.out.println("Okay thanks for playing!");
         }
 
     }
 
-    public static boolean printWordState(String word, List<Character> playerGuesses) {
-        int correctCount = 0;
-        for(int i = 0; i < word.length(); i++) {
-            if (playerGuesses.contains(word.charAt(i))) {
-                System.out.print(word.charAt(i));
-                correctCount++;
-            } else {
-                System.out.print("_");
-            }
-        }
-        return (word.length() == correctCount);
+    public static boolean gameState(String secretWord, List<Character> playerGuesses) {
+        return (secretWord.equals(wordState(secretWord, playerGuesses)));
     }
 
-    public static boolean getPlayerGuess(Scanner input, String word, List<Character> playerGuesses) {
+
+    public static String wordState(String secretWord, List<Character> playerGuesses) {
+        String retstr = "";
+        for(int i = 0; i < secretWord.length(); i++) {
+            if(playerGuesses.contains(secretWord.charAt(i))) {
+                retstr+=(secretWord.charAt(i));
+            } else {
+                retstr+=("_");
+            }
+        }
+        System.out.println(retstr);
+        return retstr;
+    }
+
+    public static boolean isGuessRight(Scanner input, String secretWord, List<Character> playerGuesses) {
         System.out.println("\nPlease enter a letter:");
         String letterGuess = input.nextLine();
         playerGuesses.add(letterGuess.charAt(0));
-        return word.contains(letterGuess);
+
+        return secretWord.contains(letterGuess);
     }
+
 
     public static void printHangedMan(Integer wrongCount) {
         System.out.println("\n +--------+");
@@ -85,7 +91,7 @@ public class Main {
         System.out.println(" ");
     }
 
-    public static void runGame (String word, List<Character> playerGuesses,Scanner input ) {
+    public static void runGame (String secretWord, List<Character> playerGuesses,Scanner input ) {
         int wrongCount = 0;
         while(true) {
 
@@ -95,12 +101,11 @@ public class Main {
                 System.out.println("Sorry, you lost.");
                 break;
             }
-
-            printWordState(word, playerGuesses);
-            if(!getPlayerGuess(input, word, playerGuesses)) {
+            wordState(secretWord,playerGuesses);
+            if(!isGuessRight(input, secretWord, playerGuesses)) {
                 wrongCount++;
             }
-            if (printWordState(word, playerGuesses)) {
+            if (gameState(secretWord, playerGuesses)) {
                 System.out.println("\nYou win!");
                 break;
             }
