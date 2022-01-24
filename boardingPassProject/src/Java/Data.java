@@ -7,6 +7,10 @@ public class Data {
     }
 
     public ArrayList<String> list = new ArrayList<>();
+    public String origin = null;
+    public String destination = null;
+    public String departureTime = null;
+    public String departureDate = null;
 
     public void getInputs() {
         Scanner scanner = new Scanner(System.in);
@@ -94,6 +98,7 @@ public class Data {
             return getOrigin();
         } else {
             origin = origin;
+            this.origin = origin;
             list.add(origin);
         }
         return origin;
@@ -107,6 +112,7 @@ public class Data {
             return getDestination();
         } else {
             destination = destination;
+            this.destination = destination;
             list.add(destination);
         }
         return destination;
@@ -115,13 +121,27 @@ public class Data {
     public String getDepartureTime() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter departure time in 24h format (example: 0100 for 1:00am, 1300 for 1:00pm)");
-        String departure = Integer.toString(scanner.nextInt());
+        String departureTime = Integer.toString(scanner.nextInt());
 
-        list.add(departure);
+        this.departureTime = departureTime;
+        list.add(departureTime);
 
-        return departure;
+        return departureTime;
     }
 
+    public String getDepartureDate() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter departure date in the following format: MM-dd-yyyy");
+        if(scanner.hasNextLine())
+    }
 
+    public String computeETA(String origin, String destination, String departureTime, String departureDate) {
+        origin = this.origin;
+        destination = this.destination;
+        departureTime = this.departureTime;
+
+
+
+    }
 
 }
