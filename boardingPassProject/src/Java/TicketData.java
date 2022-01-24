@@ -1,4 +1,9 @@
-import java.util.ArrayList;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+
+import java.io.IOException;
 import java.util.Scanner;
 
 public class TicketData {
@@ -36,8 +41,15 @@ public class TicketData {
         ticketPrice = this.ticketPrice;
     }
 
+    public int getBoardingPassNumber() {
+        return boardingPassNumber;
+    }
+
+    public void setBoardingPassNumber(int boardingPassNumber) {
+        this.boardingPassNumber = boardingPassNumber;
+    }
+
     public void getInputs() {
-        int boardingPassNumber = 0;
         getName();
         getEmail();
         getPhoneNumber();
@@ -184,16 +196,30 @@ public class TicketData {
         this.departureDate = departureDate;
     }
 
-    public String computeETA(String origin, String destination, String departureTime, String departureDate) {
+    public String computeETA(String origin, String destination, String departureTime, String departureDate) throws IOException {
         origin = this.origin;
         destination = this.destination;
         departureTime = String.valueOf(this.departureTime);
         departureDate = this.departureDate;
+        String url = "https://www.travelmath.com/flying-time/from/"+origin+"/to/"+destination;
+        Document document = Jsoup.connect(url).get();
+        Element time = document.getElementById("flyingtime");
 
+        setETA(time.text());
+        return time.text();
+    }
 
+    public void setETA(String eta) {
+        this.eta = eta;
+    }
 
+    public int computeTicketPrice() {
 
-        return null;
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(int ticketPrice) {
+        this.ticketPrice = ticketPrice;
     }
 
     @Override
