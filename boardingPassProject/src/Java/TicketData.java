@@ -1,9 +1,15 @@
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+
 
 
 import java.io.IOException;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Scanner;
 
 public class TicketData {
@@ -13,11 +19,10 @@ public class TicketData {
     private String gender;
     private int age;
     private int boardingPassNumber;
-    private String departureDate;
+    private Date departureDateTime;
     private String origin;
     private String destination;
-    private int departureTime;
-    private String eta;
+    private Date eta;
     private int ticketPrice;
 
     Scanner scanner = new Scanner(System.in);
@@ -26,20 +31,6 @@ public class TicketData {
 
     }
 
-    public TicketData(String name, String email, String phoneNumber, String gender, int age, int boardingPassNumber, String departureDate, String origin, String destination, int departureTime, String eta, int ticketPrice) {
-        name = this.name;
-        email = this.email;
-        phoneNumber = this.phoneNumber;
-        gender = this.gender;
-        age = this.age;
-        boardingPassNumber = this.boardingPassNumber;
-        departureDate = this.departureDate;
-        origin = this.origin;
-        destination = this.destination;
-        departureTime = this.departureTime;
-        eta  = this.eta;
-        ticketPrice = this.ticketPrice;
-    }
 
     public int getBoardingPassNumber() {
         return boardingPassNumber;
@@ -49,7 +40,7 @@ public class TicketData {
         this.boardingPassNumber = boardingPassNumber;
     }
 
-    public void getInputs() {
+    public void getInputs() throws ParseException {
         getName();
         getEmail();
         getPhoneNumber();
@@ -57,8 +48,7 @@ public class TicketData {
         getAge();
         getOrigin();
         getDestination();
-        getDepartureDate();
-        getDepartureTime();
+        getDepartureDateTime();
     }
 
     public String getName(){
@@ -166,50 +156,31 @@ public class TicketData {
         this.destination = destination;
     }
 
-    public int getDepartureTime() {
-        System.out.println("Enter departure time in 24h format (example: 0100 for 1:00am, 1300 for 1:00pm)");
-        int departureTime = scanner.nextInt();
+    public Date getDepartureDateTime() throws ParseException {
+        System.out.println("Enter departure date and time in the given format: MM-dd-yyyy HH:mm");
+        String departureDateTimeString = scanner.nextLine();
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+        Date departureDateTime = format.parse(departureDateTimeString);
 
-       setDepartureTime(departureTime);
-
-
-        return departureTime;
+        setDepartureDateTime(departureDateTime);
+        return departureDateTime;
     }
 
-    public void setDepartureTime(int departureTime) {
-        this.departureTime = departureTime;
+    public void setDepartureDateTime(Date departureDateTime) {
+        this.departureDateTime = departureDateTime;
     }
 
-    public String getDepartureDate() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter departure date in the following format: dd/MM/yyyy");
-        String departureDate = scanner.nextLine();
-        if(departureDate.matches("^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}")){
-            setDepartureDate(departureDate);
-        } else {
-            getDepartureDate();
-        }
-        return departureDate;
+
+
+    public Date computeETA() throws IOException {
+        int randomFlightLength = (int) (Math.floor(Math.random()*10)+1);
+
+        Date eta = Date.from(this.departureDateTime.toInstant().plus(Duration.ofHours(randomFlightLength)));
+        setETA(eta);
+        return eta;
     }
 
-    public void setDepartureDate(String departureDate) {
-        this.departureDate = departureDate;
-    }
-
-    public String computeETA(String origin, String destination, String departureTime, String departureDate) throws IOException {
-        origin = this.origin;
-        destination = this.destination;
-        departureTime = String.valueOf(this.departureTime);
-        departureDate = this.departureDate;
-        String url = "https://www.travelmath.com/flying-time/from/"+origin+"/to/"+destination;
-        Document document = Jsoup.connect(url).get();
-        Element time = document.getElementById("flyingtime");
-
-        setETA(time.text());
-        return time.text();
-    }
-
-    public void setETA(String eta) {
+    public void setETA(Date eta) {
         this.eta = eta;
     }
 
@@ -226,7 +197,7 @@ public class TicketData {
     public String toString() {
         return "BOARDING PASS # " + boardingPassNumber + "\n" +
                 "Name: " + name + "  |  " + "Email: " + email + "  |  " + "Phone Number: " + phoneNumber + "  |  " + "Gender: " + gender + "  |  " + "Age: " + age + "\n" +
-                "Departure Date: " + departureDate + "  |  " + "Departure Time: " + departureTime + "\n" +
+                "Departure Date & Time: " + departureDateTime + "\n" +
                 "Origin: " + origin + "  |  " + "Destination: " + destination + "  |  " + "ETA: " + eta + "\n" +
                 "Ticket Price: " + ticketPrice;
     }
