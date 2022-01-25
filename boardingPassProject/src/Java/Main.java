@@ -6,6 +6,7 @@ public class Main {
         TicketData ticketData = new TicketData();
         ticketData.getInputs();
         ticketData.computeETA();
+        ticketData.computeTicketPrice();
         System.out.println(ticketData);
     }
 }

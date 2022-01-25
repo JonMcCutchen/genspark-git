@@ -1,14 +1,6 @@
-
-
-
-import java.io.IOException;
-import java.sql.Time;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -23,7 +15,8 @@ public class TicketData {
     private String origin;
     private String destination;
     private Date eta;
-    private int ticketPrice;
+    private String ticketPrice;
+    private int randomFlightLength = (int) (Math.floor(Math.random()*10)+1);
 
     Scanner scanner = new Scanner(System.in);
 
@@ -51,12 +44,10 @@ public class TicketData {
         getDepartureDateTime();
     }
 
-    public String getName(){
+    public void getName(){
         System.out.println("Enter your name");
         String name = scanner.nextLine();
         setName(name);
-
-        return name;
     }
 
     public void setName(String name) {
@@ -156,14 +147,13 @@ public class TicketData {
         this.destination = destination;
     }
 
-    public Date getDepartureDateTime() throws ParseException {
+    public void getDepartureDateTime() throws ParseException {
         System.out.println("Enter departure date and time in the given format: MM-dd-yyyy HH:mm");
         String departureDateTimeString = scanner.nextLine();
         SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm");
         Date departureDateTime = format.parse(departureDateTimeString);
 
         setDepartureDateTime(departureDateTime);
-        return departureDateTime;
     }
 
     public void setDepartureDateTime(Date departureDateTime) {
@@ -172,24 +162,39 @@ public class TicketData {
 
 
 
-    public Date computeETA() throws IOException {
-        int randomFlightLength = (int) (Math.floor(Math.random()*10)+1);
+    public void computeETA() {
 
         Date eta = Date.from(this.departureDateTime.toInstant().plus(Duration.ofHours(randomFlightLength)));
         setETA(eta);
-        return eta;
     }
 
     public void setETA(Date eta) {
         this.eta = eta;
     }
 
-    public int computeTicketPrice() {
+    public void computeTicketPrice() {
+        float discount = 1;
+        float ticketPrice = randomFlightLength * 100;
+        if (this.age <= 12) {
+            discount -= .5;
 
-        return ticketPrice;
+        }
+        if (this.age >= 60) {
+            discount -= .4;
+        }
+        if (this.gender.equals("F") || this.gender.equals("f")) {
+            discount -= .75;
+        }
+        float discountedTicketPrice;
+        if (discount != 1) {
+            discountedTicketPrice = ticketPrice - (ticketPrice * discount);
+        } else {
+            discountedTicketPrice = ticketPrice;
+        }
+        setTicketPrice("$" + discountedTicketPrice);
     }
 
-    public void setTicketPrice(int ticketPrice) {
+    public void setTicketPrice(String ticketPrice) {
         this.ticketPrice = ticketPrice;
     }
 
