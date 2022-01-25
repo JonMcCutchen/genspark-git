@@ -35,7 +35,7 @@ public class TicketData {
     public void generateID() throws IOException {
         Path path = Paths.get("BoardingPass.txt");
 
-        long lines = lines = Files.lines(path).count();
+        long lines = Files.lines(path).count();
 
         setBoardingPassNumber((int) lines + 1);
     }
@@ -184,22 +184,23 @@ public class TicketData {
     }
 
     public void computeTicketPrice() {
-        float discount = 1;
+        float discount = 0;
         float ticketPrice = randomFlightLength * 100;
         if (this.age <= 12) {
-            discount -= .5;
+            discount += .5;
 
         }
         if (this.age >= 60) {
-            discount -= .4;
+            discount += .6;
         }
         if (this.gender.equals("F") || this.gender.equals("f")) {
-            discount -= .75;
+            discount += .25;
         }
         float discountedTicketPrice;
-        if (discount != 1) {
+        if (discount > 0) {
             discountedTicketPrice = ticketPrice - (ticketPrice * discount);
         } else {
+            discount = 1;
             discountedTicketPrice = ticketPrice;
         }
         setTicketPrice("$" + discountedTicketPrice);

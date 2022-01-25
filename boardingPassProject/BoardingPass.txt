@@ -1,3 +1,2 @@
-ID: 1 Name: Jon Email: jmmccutchen1@gmail.com Phone Number: 555-555-5555 Gender: M Age: 23 Departure Time & Date: Thu Jan 27 15:00:00 EST 2022 Origin: New York Destination: Chicago ETA: Thu Jan 27 20:00:00 EST 2022 Ticket Price: $500.0
-ID: 2 Name: Jay Email: jay@gmail.com Phone Number: 555-555-5555 Gender: F Age: 20 Departure Time & Date: Sat Jan 22 11:00:00 EST 2022 Origin: Dallas Destination: DC ETA: Sat Jan 22 15:00:00 EST 2022 Ticket Price: $300.0
-ID: 3 Name: Jimmy Email: jimmy@gmail.com Phone Number: 555-555-5555 Gender: M Age: 30 Departure Time & Date: Wed Feb 23 16:00:00 EST 2022 Origin: Austin Destination: Denver ETA: Wed Feb 23 20:00:00 EST 2022 Ticket Price: $400.0
+ID: 1 Name: Jon  Email: jmmccutchen1@gmail.com Phone Number: 555-555-5555 Gender: M Age: 23 Departure Time & Date: Thu Jan 27 15:00:00 EST 2022 Origin: New York Destination: Los Angeles ETA: Fri Jan 28 00:00:00 EST 2022 Ticket Price: $900.0
+ID: 2 Name: Emma  Email: emma@gmail.com Phone Number: 555-555-5555 Gender: F Age: 65 Departure Time & Date: Sat Mar 05 13:00:00 EST 2022 Origin: Dallas Destination: Denver ETA: Sat Mar 05 16:00:00 EST 2022 Ticket Price: $45.0
