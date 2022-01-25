@@ -1,3 +1,10 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -10,7 +17,7 @@ public class TicketData {
     private String phoneNumber;
     private String gender;
     private int age;
-    private int boardingPassNumber;
+    private int boardingPassNumber = 0;
     private Date departureDateTime;
     private String origin;
     private String destination;
@@ -25,8 +32,12 @@ public class TicketData {
     }
 
 
-    public int getBoardingPassNumber() {
-        return boardingPassNumber;
+    public void generateID() throws IOException {
+        Path path = Paths.get("BoardingPass.txt");
+
+        long lines = lines = Files.lines(path).count();
+
+        setBoardingPassNumber((int) lines + 1);
     }
 
     public void setBoardingPassNumber(int boardingPassNumber) {
@@ -196,6 +207,12 @@ public class TicketData {
 
     public void setTicketPrice(String ticketPrice) {
         this.ticketPrice = ticketPrice;
+    }
+
+    public void writeToFile() throws IOException {
+        FileWriter writer = new FileWriter("BoardingPass.txt", true);
+        writer.write("ID: " + boardingPassNumber + " Name: " + name + " Email: " + email + " Phone Number: " + phoneNumber + " Gender: " + gender + " Age: " + age + " Departure Time & Date: " + departureDateTime + " Origin: " + origin + " Destination: " + destination + " ETA: " + eta + " Ticket Price: " + ticketPrice + "\n");
+        writer.close();
     }
 
     @Override
