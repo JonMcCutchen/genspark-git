@@ -159,7 +159,7 @@ public class TicketData {
     }
 
     public void getDepartureDateTime() throws ParseException {
-        System.out.println("Enter departure date and time in the given format: MM-dd-yyyy HH:mm");
+        System.out.println("Enter departure date and time in the given format (24h): MM-dd-yyyy HH:mm");
         String departureDateTimeString = scanner.nextLine();
         SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm");
         Date departureDateTime = format.parse(departureDateTimeString);
